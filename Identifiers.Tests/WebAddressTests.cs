@@ -176,6 +176,22 @@ namespace Identifiers.Tests
             AssertValidInput(@"https://www.google.fi/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=email%20address%20regex");
         }
 
+        [TestMethod]
+        public void AddressWithFinnishAlphabetExtraCharacters()
+        {
+            const string address = @"http://www.häviö.fi";
+
+            sut = WebAddress.Create(address);
+
+            Assert.AreEqual(address, sut.ToString());
+        }
+
+        [TestMethod]
+        public void TryAddressWithFinnishAlphabetExtraCharacters()
+        {
+            AssertValidInput(@"http://www.häviö.fi");
+        }
+
         private static void AssertValidInput(string value)
         {
             AssertSuccessfulTryCreate(value);

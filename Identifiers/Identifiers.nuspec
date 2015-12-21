@@ -7,6 +7,6 @@
     <description>$description$</description>
     <projectUrl>https://github.com/affecto/dotnet-Identifiers</projectUrl>
     <tags>affecto identifier identifiers validate validation email e-mail web www address specification pattern regex regular expression</tags>
-    <releaseNotes>Moved to GitHub.</releaseNotes>
+    <releaseNotes>Allow Finnish alphabet extra characters in web address.</releaseNotes>
   </metadata>
 </package>
