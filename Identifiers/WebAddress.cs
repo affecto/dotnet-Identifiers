@@ -23,7 +23,7 @@ namespace Affecto.Identifiers
             {
                 return new WebAddress(webAddress);
             }
-            throw new ArgumentException(string.Format("Email address '{0}' doesn't satisfy specification.", webAddress), "webAddress");
+            throw new ArgumentException(string.Format("Web address '{0}' doesn't satisfy specification.", webAddress), "webAddress");
         }
 
         public static bool TryCreate(string webAddress, out WebAddress result, out string failureReason)
