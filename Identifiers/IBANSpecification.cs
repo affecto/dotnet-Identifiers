@@ -65,7 +65,7 @@ namespace Affecto.Identifiers
             string transformedIban = ibanToCheck.Substring(4) + ibanToCheck.Substring(0, 4);
             
             int value = 0;
-            BigInteger val = 0;
+            BigInteger numericPresentationOfIBAN = 0;
 
             //Change chars to number values (A = 10, B = 11, ...)
             for (int i = 0; i < ibanLength; i++)
@@ -74,16 +74,16 @@ namespace Affecto.Identifiers
 
                 if (c >= '0' && c <= '9')
                 {
-                    val = val*10 + int.Parse(c.ToString());
+                    numericPresentationOfIBAN = numericPresentationOfIBAN*10 + int.Parse(c.ToString());
                 }
                 else if (c >= 'A' && c <= 'Z')
                 {
                     value = c - 'A'; // for ex. D => 'D' - 'A' = 3
-                    val = val * 100 + value + 10;
+                    numericPresentationOfIBAN = numericPresentationOfIBAN * 100 + value + 10;
                 }
             }
 
-            BigInteger checksum = BigInteger.Remainder(val, 97);
+            BigInteger checksum = BigInteger.Remainder(numericPresentationOfIBAN, 97);
 
             return checksum == 1;
 
