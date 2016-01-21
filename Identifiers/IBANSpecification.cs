@@ -1,12 +1,7 @@
 ﻿using Affecto.Patterns.Specification;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Affecto.Identifiers
 {
@@ -56,38 +51,6 @@ namespace Affecto.Identifiers
 
         }
 
-        private int CalculateRemainder(string iban)
-        {
-            // https://www.fkl.fi/teemasivut/sepa/tekninen_dokumentaatio/Sivut/default.aspx
-            // https://www.fkl.fi/teemasivut/sepa/tekninen_dokumentaatio/Dokumentit/IBAN_ja_BIC_maksuliikenteessa.pdf
-            // https://www.fkl.fi/teemasivut/sepa/tekninen_dokumentaatio/Dokumentit/Suomalaiset_rahalaitostunnukset_ja_BIC-koodit.pdf
-                        
-
-            int ibanLength = iban.Length;
-
-            int checksum = 0;
-
-            for (int i = 0; i < ibanLength; i++)
-            {
-                int value = 0;
-                char c = iban[(i + 4) % ibanLength];
-
-                if (c >= '0' && c <= '9')
-                {
-                    value = c - '0';
-                }
-                else if (c >= 'A' && c <= 'Z')
-                {
-                    value = c - 'A';
-                    checksum = (checksum * 10 + (value / 10 + 1)) % 97;
-                    value %= 10;
-                }
-
-                checksum = (checksum * 10 + value) % 97;
-            }
-
-            return checksum;
-        }
 
         private bool IsValidCheckSum(string ibanToCheck)
         {
@@ -96,17 +59,18 @@ namespace Affecto.Identifiers
             // https://www.fkl.fi/teemasivut/sepa/tekninen_dokumentaatio/Dokumentit/Suomalaiset_rahalaitostunnukset_ja_BIC-koodit.pdf
             // https://www.swift.com/sites/default/files/resources/swift_standards_infopaper_ibanregistry.pdf
 
-            //Move country code and checksum (4 chars) to the end of the string
-            string iban = ibanToCheck.Substring(4) + ibanToCheck.Substring(0, 4);
-            int ibanLength = iban.Length;
+            int ibanLength = ibanToCheck.Length;
 
+            //Move country code and checksum (4 chars) to the end of the string
+            string transformedIban = ibanToCheck.Substring(4) + ibanToCheck.Substring(0, 4);
+            
             int value = 0;
             BigInteger val = 0;
 
-            //Transform chars to numbers (A = 10, B = 11, ...)
+            //Change chars to number values (A = 10, B = 11, ...)
             for (int i = 0; i < ibanLength; i++)
             {                
-                char c = iban[i];
+                char c = transformedIban[i];
 
                 if (c >= '0' && c <= '9')
                 {
@@ -121,10 +85,8 @@ namespace Affecto.Identifiers
 
             BigInteger checksum = BigInteger.Remainder(val, 97);
 
-            if(checksum == 1)
-                return true;
-            else
-                return false;
+            return checksum == 1;
+
         }
 
 
