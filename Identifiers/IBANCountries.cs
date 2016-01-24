@@ -24,8 +24,8 @@ namespace Affecto.Identifiers
             //</Document>
 
             IBANLengthByCountry = new Dictionary<string, int>();
-
-            using (var strm = File.OpenRead("IBANCountryData.xml"))
+            //Country specific IBAN lengths are specified in embedded resource xml file
+            using (var strm = typeof(IBANCountries).Assembly.GetManifestResourceStream("Affecto.Identifiers.xml.IBANCountryData.xml"))
             {
                 XDocument xml = XDocument.Load(strm);
                 var countries = xml.Descendants("Country");
