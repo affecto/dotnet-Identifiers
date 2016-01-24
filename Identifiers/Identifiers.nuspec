@@ -6,7 +6,7 @@
     <authors>$author$</authors>
     <description>$description$</description>
     <projectUrl>https://github.com/affecto/dotnet-Identifiers</projectUrl>
-    <tags>affecto identifier identifiers validate validation email e-mail web www address specification pattern regex regular expression</tags>
-    <releaseNotes>Allow Finnish alphabet extra characters in web address.</releaseNotes>
+    <tags>affecto identifier identifiers validate validation email e-mail web www address specification pattern regex regular expression iban bank account</tags>
+    <releaseNotes>Add IBAN bank account specification.</releaseNotes>
   </metadata>
 </package>
